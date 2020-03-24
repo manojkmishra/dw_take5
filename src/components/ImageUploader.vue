@@ -7,7 +7,7 @@
         :class="{ dragging: isDragging }">
         
         <div class="upload-control" v-show="images.length">
-            <label for="file">Select a file</label>
+            <label for="file">Select files</label>
             <button @click="upload">Upload</button>
         </div>
 
@@ -16,7 +16,7 @@
             <i class="fa fa-cloud-upload"></i>
             <p>Drag your images here</p><div>OR</div>
             <div class="file-input">
-                <label for="file">Select a file</label>
+                <label for="file">Select files</label>
                 <input type="file" id="file" @change="onInputChange" multiple>
             </div>
         </div>
@@ -30,13 +30,23 @@
                 </div>
             </div>
         </div>
+    <div v-show="images.length" class="progress">
+        <div
+            class="progress-bar progress-bar-info progress-bar-striped"
+            role="progressbar"  :aria-valuenow="progress"
+            aria-valuemin="0"   aria-valuemax="100"
+            :style="{ width: progress + '%' }"
+        >
+        {{ progress}}%
+    </div>
+    </div>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
 export default 
-{   data: () => ({ isDragging: false, dragCount: 0, files: [],images: [] }),
+{   data: () => ({ isDragging: false, dragCount: 0, files: [],images: [] ,progress:0}),
     methods: {
         OnDragEnter(e) {    e.preventDefault();
                             this.dragCount++;
@@ -73,15 +83,17 @@ export default
                             while(size > 900) { size /= 1024; i++; }
                             return `${(Math.round(size * 100) / 100)} ${fSExt[i]}`;
                           },
-        upload() {  
+        upload() {  //this.progress = '0';
                     const formData = new FormData();
                     
                     this.files.forEach(file => 
                     {    formData.append('images[]', file, file.name);   });
                     console.log('upload triggered FormData=',formData)
                    // resp=axios.post('http://127.0.0.1:8000/sendemail1',this.formData); 
-                    axios.post('http://127.0.0.1:8000/api/imagesupload', formData,
-                                {onUploadProgress:uploadEvent=>{
+                  //  axios.post('http://127.0.0.1:8000/api/imagesupload', formData,
+                    axios.post('https://ua.oms.dowell.com.au/api/imagesupload', formData,
+                                {onUploadProgress:uploadEvent=>{ this.progress=Math.round(uploadEvent.loaded/uploadEvent.total*100);
+                                            
                                         console.log('upld prges:'+ Math.round(uploadEvent.loaded/uploadEvent.total*100)+'%')
                                     }
                                 })
@@ -90,8 +102,16 @@ export default
                             this.$toastr.s('All images uplaoded successfully');
                             this.images = [];
                             this.files = [];
+                            this.progress = 0;
                             })
-        }
+                                .catch(() => {
+                                    
+                                    this.$toastr.e('Could not upload the files!');
+                                    this.images = [];
+                                    this.files = [];
+                                    this.progress = 0;
+                                    });
+                                    }
     }
 }
 </script>
