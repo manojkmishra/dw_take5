@@ -91,7 +91,7 @@ export default
                     console.log('upload triggered FormData=',formData)
                    // resp=axios.post('http://127.0.0.1:8000/sendemail1',this.formData); 
                   //  axios.post('http://127.0.0.1:8000/api/imagesupload', formData,
-                    axios.post('https://ua.oms.dowell.com.au/api/imagesupload', formData,
+                    axios.post('https://uat.oms.dowell.com.au/api/imagesupload', formData,
                                 {onUploadProgress:uploadEvent=>{ this.progress=Math.round(uploadEvent.loaded/uploadEvent.total*100);
                                             
                                         console.log('upld prges:'+ Math.round(uploadEvent.loaded/uploadEvent.total*100)+'%')
