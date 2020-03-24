@@ -1,12 +1,9 @@
 <template>
   <div class="hello">
-    <h1>Afik </h1>
-   <div class="alert alert-success alert-dismissible fade show" role="alert">
-  With Bootstrap!
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
+    <h1>Academind </h1>
+    <input style="display:none" type="file" @change="onselect" ref="fileinp">
+    <button @click="$refs.fileinp.click()">Pick File</button>
+    <button @click="onupload">Upload</button>
   </div>
 </template>
 <script>
