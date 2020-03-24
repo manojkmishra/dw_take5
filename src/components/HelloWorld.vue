@@ -1,30 +1,29 @@
 <template>
-  <div class="hello">
-    <h1>Afik </h1>
-   <div class="alert alert-success alert-dismissible fade show" role="alert">
-  With Bootstrap!
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-  </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-9">
+                <div class="card card-default">
+                    <div class="card-header">Example Component</div>
+
+                    <div class="card-body">
+                        <image-uploader></image-uploader>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 <script>
 import axios from 'axios'
+ import ImageUploader from './ImageUploader';
 export default 
 {
-  data(){return{ selectedFiles:null}},
-  methods:{ onselect(e)
-              { console.log('e=',e);
-                this.selectedFiles=e.target.files[0];
-              },
-              onupload(){
-                const fd=new FormData();
-                fd.append('image',this.selectedFiles,this.selectedFiles.name)
-                console.log('formdata=',fd);
-                //axios.post('{onUploadProgress:}'); //8 min
-              }
-  }
+ mounted() {
+            console.log('HWComponent mounted.')
+        },
+        components: {
+            ImageUploader
+        }
 }
 </script>
 
