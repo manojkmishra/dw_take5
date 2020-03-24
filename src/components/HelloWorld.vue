@@ -3,7 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-md-9">
                 <div class="card card-default">
-                    <div class="card-header">Example Component</div>
+                    <div class="card-header">Dowell Take5</div>
 
                     <div class="card-body">
                         <image-uploader></image-uploader>

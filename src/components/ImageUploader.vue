@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default 
 {   data: () => ({ isDragging: false, dragCount: 0, files: [],images: [] }),
     methods: {
@@ -78,7 +79,9 @@ export default
                     this.files.forEach(file => 
                     {    formData.append('images[]', file, file.name);   });
                     console.log('upload triggered FormData=',formData)
-                    axios.post('/images-upload', formData)
+                   // resp=axios.post('http://127.0.0.1:8000/sendemail1',this.formData); 
+                   // axios.post('http://127.0.0.1:8000/api/imagesupload', formData)
+                    axios.post('https://uat.oms.dowell.com.au/api/imagesupload', formData)
                         .then(response => {
                             this.$toastr.s('All images uplaoded successfully');
                             this.images = [];
