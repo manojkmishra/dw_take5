@@ -80,8 +80,12 @@ export default
                     {    formData.append('images[]', file, file.name);   });
                     console.log('upload triggered FormData=',formData)
                    // resp=axios.post('http://127.0.0.1:8000/sendemail1',this.formData); 
-                   // axios.post('http://127.0.0.1:8000/api/imagesupload', formData)
-                    axios.post('https://uat.oms.dowell.com.au/api/imagesupload', formData)
+                    axios.post('http://127.0.0.1:8000/api/imagesupload', formData,
+                                {onUploadProgress:uploadEvent=>{
+                                        console.log('upld prges:'+ Math.round(uploadEvent.loaded/uploadEvent.total*100)+'%')
+                                    }
+                                })
+                    //axios.post('https://uat.oms.dowell.com.au/api/imagesupload', formData)
                         .then(response => {
                             this.$toastr.s('All images uplaoded successfully');
                             this.images = [];
